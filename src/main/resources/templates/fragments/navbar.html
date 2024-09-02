@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+<head>
+  <meta charset="UTF-8">
+  <title>Navbar Fragment</title>
+</head>
+<body>
+<div th:fragment="navbar">
+  <div class="container authenticated">
+    <span sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="principal.attributes['login']"></span></span>
+    <div>
+      <form th:action="@{/logout}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit">Logout</button>
+      </form>
+    </div>
+  </div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/hasher">Password Hasher</a>
+    <a href="/cracker">Password Cracker</a>
+  </nav>
+</div>
+</body>
+</html>
