@@ -12,7 +12,7 @@
 <h1>Password cracker</h1>
 
 <form th:action="@{/crackText}" method="post">
-    <label for="inputText">Enter Hash to crack:</label>
+    <label for="inputText">Enter MD5 or SHA-256 hash to crack:</label>
     <input type="text" id="inputText" name="inputText"/>
     <button type="submit">Crack</button>
 </form>
