@@ -8,6 +8,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
 @Controller
@@ -18,8 +26,12 @@ public class CrackerController {
         return "cracker";
     }
 
+
     @PostMapping("/crackText")
     public String crackText(@RequestParam("inputText") String textToMatch, Model model) {
+
+        long startTime = System.nanoTime(); // Start time for benchmarking
+
         String crackedPassword = null;
 
         try (BufferedReader reader = new BufferedReader(new FileReader("src/hashes.txt"))) {
@@ -47,6 +59,11 @@ public class CrackerController {
         if (crackedPassword != null) {
             model.addAttribute("crackedValues", crackedPassword);
             System.out.println("Match found: " + crackedPassword);
+
+            long endTime = System.nanoTime(); // End time for benchmarking
+            long durationInMillis = (endTime - startTime) / 1_000_000; // Convert to milliseconds
+
+            System.out.println("Time taken: " + durationInMillis + " ms");
         } else {
             model.addAttribute("noMatch", "No match found.");
             System.out.println("No match found.");
@@ -54,5 +71,8 @@ public class CrackerController {
 
         return "cracker";
     }
-}
+
+
+    }
+
 

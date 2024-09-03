@@ -3,22 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>Navbar Fragment</title>
+
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
 </head>
 <body>
 <div th:fragment="navbar">
-  <div class="container authenticated">
-    <span sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="principal.attributes['login']"></span></span>
-    <div>
-      <form th:action="@{/logout}" method="post">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <button type="submit">Logout</button>
-      </form>
-    </div>
-  </div>
   <nav>
+    <div class="navbar">
+      <div class="container authenticated">
+        <span sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="principal.attributes['login']"></span></span>
+        <div>
+          <form th:action="@{/logout}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit">Logout</button>
+          </form>
+        </div>
+      </div>
     <a href="/">Home</a>
     <a href="/hasher">Password Hasher</a>
     <a href="/cracker">Password Cracker</a>
+    </div>
   </nav>
 </div>
 </body>
